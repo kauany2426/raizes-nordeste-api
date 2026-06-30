@@ -7,7 +7,7 @@ class Configuracoes(BaseSettings):
     JWT_REFRESH_SECRET: str
     JWT_EXPIRES_MINUTES: int = 15
     JWT_REFRESH_EXPIRES_DAYS: int = 7
-    PORT: int = 8000
+    PORT: int = 8080
 
     model_config = {"env_file": ".env"}
 

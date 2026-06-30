@@ -6,6 +6,7 @@ from datetime import datetime
 import uuid
 
 from database import Base, engine
+from config import configuracoes
 from routers import auth, usuarios, produtos, unidades, estoque, pedidos, pagamentos
 
 # cria as tabelas no banco se ainda não existirem
@@ -101,3 +102,8 @@ async def generic_exception_handler(request: Request, exc: Exception):
 @app.get("/", tags=["Status"])
 def status():
     return {"status": "online", "mensagem": "API Raízes do Nordeste funcionando"}
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=configuracoes.PORT, reload=True)

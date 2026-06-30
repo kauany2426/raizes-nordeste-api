@@ -45,8 +45,8 @@ def login(dados: LoginInput, db: Session = Depends(get_db)):
     if not usuario or not verificar_senha(dados.senha, usuario.senha_hash):
         raise HTTPException(status_code=401, detail="E-mail ou senha inválidos")
 
-    access_token = criar_access_token({"sub": usuario.id, "perfil": usuario.perfil.value})
-    refresh_token = criar_refresh_token({"sub": usuario.id})
+    access_token = criar_access_token({"sub": str(usuario.id), "perfil": usuario.perfil.value})
+    refresh_token = criar_refresh_token({"sub": str(usuario.id)})
 
     # salva o hash do refresh token no banco
     usuario.refresh_token_hash = hash_senha(refresh_token)
@@ -72,8 +72,8 @@ def renovar_token(dados: RefreshTokenInput, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Refresh token não é válido")
 
     # gera novos tokens
-    novo_access = criar_access_token({"sub": usuario.id, "perfil": usuario.perfil.value})
-    novo_refresh = criar_refresh_token({"sub": usuario.id})
+    novo_access = criar_access_token({"sub": str(usuario.id), "perfil": usuario.perfil.value})
+    novo_refresh = criar_refresh_token({"sub": str(usuario.id)})
 
     usuario.refresh_token_hash = hash_senha(novo_refresh)
     db.commit()

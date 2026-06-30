@@ -19,7 +19,7 @@ def get_current_user(
 
     try:
         payload = decodificar_access_token(token)
-        usuario_id = payload.get("sub")
+        usuario_id = int(payload.get("sub"))
     except JWTError:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
